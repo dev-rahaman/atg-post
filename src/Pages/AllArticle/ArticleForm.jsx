@@ -17,6 +17,7 @@ const ArticleForm = () => {
       blogTitle,
       blogParagraph,
       category: "article",
+      like: "0",
     };
 
     fetch("https://atg-server-delta.vercel.app/article", {

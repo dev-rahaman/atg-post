@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, Col, Row } from "react-bootstrap";
+import { Button, Card, Col, Row } from "react-bootstrap";
 import {
   BsFillShareFill,
   BsFillEyeFill,
@@ -8,7 +8,9 @@ import {
   BsFillHandbagFill,
   BsFillCalendarEventFill,
   BsMortarboardFill,
+  BsFillSuitHeartFill,
 } from "react-icons/bs";
+import CommentForm from "../../Component/CommentForm/CommentForm";
 
 const Home = () => {
   const [article, setArticle] = useState([]);
@@ -25,6 +27,26 @@ const Home = () => {
 
   const handleSeeMore = (idx) => {
     setExpandedCard(idx);
+  };
+
+  const [liked, setLiked] = useState(false);
+  const [disabled, setDisabled] = useState(false);
+
+  const handleLike = (_id) => {
+    fetch(`http://localhost:5000/like/${"education"}/${_id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setDisabled(true);
+        setLiked(true);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
@@ -94,8 +116,9 @@ const Home = () => {
                         </span>
                       </>
                     )}
-                    <div className="poster-info d-flex align-items-center justify-content-between mt-3">
-                      <div className="left d-flex align-items-center gap-2">
+
+                    <div className="poster-info d-flex align-items-center justify-content-between  mt-3 ">
+                      <div className="left d-flex align-items-center">
                         <img
                           src={item.bloggerImage}
                           alt="Poster"
@@ -106,9 +129,31 @@ const Home = () => {
                             borderRadius: "50%",
                           }}
                         />
-                        <h5 className="poster-name">{item.bloggerName}</h5>
+                        <h5 className="poster-name ms-2 ">
+                          {item.bloggerName}
+                        </h5>
                       </div>
-                      <div className="right d-flex">
+                      <CommentForm></CommentForm>
+                      <div className="d-flex align-content-center mt-2   ">
+                        <button
+                          onClick={() => handleLike(item?._id)}
+                          disabled={disabled}
+                          style={{
+                            fontSize: "20px",
+                            border: "none",
+                            outline: "none",
+                            backgroundColor: "transparent",
+                          }}
+                        >
+                          <BsFillSuitHeartFill
+                            color={liked ? "red" : "black"}
+                            style={{
+                              marginRight: "10px",
+                            }}
+                          />
+                          {item.like}
+                        </button>
+
                         <p className="mx-5">
                           <BsFillEyeFill /> 124k views
                         </p>

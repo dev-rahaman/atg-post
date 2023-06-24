@@ -17,6 +17,7 @@ const EducationForm = () => {
       blogTitle,
       blogParagraph,
       category: "education",
+      like: "0",
     };
 
     fetch("https://atg-server-delta.vercel.app/education", {

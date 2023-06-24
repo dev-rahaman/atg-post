@@ -17,6 +17,7 @@ const EventForm = () => {
       blogParagraph,
       blogImage,
       category: "event",
+      like: "0",
     };
 
     fetch("https://atg-server-delta.vercel.app/event", {

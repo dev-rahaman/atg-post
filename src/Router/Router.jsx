@@ -10,6 +10,8 @@ import ArticleForm from "../Pages/AllArticle/ArticleForm";
 import EducationForm from "../Pages/AllEducation/EducationForm";
 import JobForm from "../Pages/AllJobs/JobForm";
 import EventForm from "../Pages/AllEvent/EventForm";
+import Login from "../Users/Login/Login";
+import Registration from "../Users/Registration/Registration";
 
 const Router = createBrowserRouter([
   {
@@ -43,20 +45,32 @@ const Router = createBrowserRouter([
       {
         path: "/all-article",
         element: <AllArticle></AllArticle>,
+        loader: () => fetch("https://atg-server-delta.vercel.app/articles"),
       },
       {
         path: "/all-event",
         element: <AllEvent></AllEvent>,
+        loader: () => fetch("https://atg-server-delta.vercel.app/event"),
       },
       {
         path: "/all-education",
         element: <AllEducation></AllEducation>,
+        loader: () => fetch("https://atg-server-delta.vercel.app/education"),
       },
       {
         path: "/all-jobs",
         element: <AllJob></AllJob>,
+        loader: () => fetch("https://atg-server-delta.vercel.app/job"),
       },
     ],
+  },
+  {
+    path: "/login",
+    element: <Login></Login>,
+  },
+  {
+    path: "/registration",
+    element: <Registration></Registration>,
   },
 ]);
 

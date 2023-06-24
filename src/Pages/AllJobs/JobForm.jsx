@@ -17,6 +17,7 @@ const JobForm = () => {
       blogParagraph,
       blogImage,
       category: "job",
+      like: "0",
     };
 
     fetch("https://atg-server-delta.vercel.app/job", {
