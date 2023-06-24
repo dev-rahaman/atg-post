@@ -13,7 +13,7 @@ const Login = () => {
       password,
     };
 
-    fetch("http://localhost:5000/login", {
+    fetch("https://atg-server-delta.vercel.app/login", {
       method: "POST",
       headers: {
         "content-type": "application/json",

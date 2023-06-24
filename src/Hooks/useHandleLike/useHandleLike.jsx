@@ -5,7 +5,7 @@ const useLike = () => {
   const [disabled, setDisabled] = useState(false);
 
   const handleLike = (_id) => {
-    fetch(`http://localhost:5000/like/${_id}`, {
+    fetch(`https://atg-server-delta.vercel.app/like/${_id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

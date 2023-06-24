@@ -35,7 +35,7 @@ const JobsCart = ({ item }) => {
   const [disabled, setDisabled] = useState(false);
 
   const handleLike = (_id) => {
-    fetch(`http://localhost:5000/job-like/${_id}`, {
+    fetch(`https://atg-server-delta.vercel.app/job-like/${_id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

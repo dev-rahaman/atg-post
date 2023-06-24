@@ -35,7 +35,7 @@ const EventCart = ({ item }) => {
   const [disabled, setDisabled] = useState(false);
 
   const handleLike = (_id) => {
-    fetch(`http://localhost:5000/event-like/${_id}`, {
+    fetch(`https://atg-server-delta.vercel.app/event-like/${_id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
