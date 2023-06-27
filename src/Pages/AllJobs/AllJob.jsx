@@ -11,9 +11,10 @@ const AllArticle = () => {
       <div className="container">
         <div>
           <Col lg={12} md={12} sm={12}>
-            {loadData.map((item) => (
-              <JobsCart key={item._id} item={item}></JobsCart>
-            ))}
+            {loadData &&
+              loadData.map((item) => (
+                <JobsCart key={item._id} item={item}></JobsCart>
+              ))}
           </Col>
         </div>
       </div>

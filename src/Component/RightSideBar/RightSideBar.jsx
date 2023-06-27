@@ -50,33 +50,34 @@ const RightSideBar = () => {
       <h2>Recommended Groups</h2>
       <table>
         <tbody>
-          {data.map((item, index) => (
-            <tr key={index}>
-              <td>
-                <img
-                  src={item.image}
-                  alt="item"
-                  style={{
-                    width: "50px",
-                    height: "50px",
-                    borderRadius: "50%",
-                  }}
-                />
-              </td>
-              <td>
-                <p className="m-4">{item.heading}</p>
-              </td>
-              <td>
-                <Button
-                  variant="primary"
-                  onClick={() => handleFollow(index)}
-                  style={{ width: "80px" }}
-                >
-                  {followStatus[index] ? "Unfollow" : "Follow"}
-                </Button>
-              </td>
-            </tr>
-          ))}
+          {data &&
+            data.map((item, index) => (
+              <tr key={index}>
+                <td>
+                  <img
+                    src={item.image}
+                    alt="item"
+                    style={{
+                      width: "50px",
+                      height: "50px",
+                      borderRadius: "50%",
+                    }}
+                  />
+                </td>
+                <td>
+                  <p className="m-4">{item.heading}</p>
+                </td>
+                <td>
+                  <Button
+                    variant="primary"
+                    onClick={() => handleFollow(index)}
+                    style={{ width: "80px" }}
+                  >
+                    {followStatus[index] ? "Unfollow" : "Follow"}
+                  </Button>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>

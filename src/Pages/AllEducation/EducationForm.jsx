@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Container, Form, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const EducationForm = () => {
   const [bloggerName, setBloggerName] = useState("");
@@ -7,6 +9,7 @@ const EducationForm = () => {
   const [blogTitle, setBlogTitle] = useState("");
   const [blogParagraph, setBlogParagraph] = useState("");
   const [blogImage, setBlogImage] = useState("");
+  const navigate = useNavigate("/");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,6 +30,14 @@ const EducationForm = () => {
       },
       body: JSON.stringify(education),
     });
+    Swal.fire({
+      position: "top-center",
+      icon: "success",
+      title: "Your Education is posted",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    navigate("/");
   };
 
   return (

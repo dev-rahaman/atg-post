@@ -1,14 +1,55 @@
-import React, { useState } from "react";
-import { Button, Nav, NavDropdown, Navbar } from "react-bootstrap";
+import React, { useEffect, useRef, useState } from "react";
+import { Nav, NavDropdown, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import ActiveLink from "../../../Component/ActiveLink/ActiveLink";
+import {
+  BsFillCalendarEventFill,
+  BsFillHandbagFill,
+  BsFillPenFill,
+  BsMortarboardFill,
+} from "react-icons/bs";
+import { FaHome } from "react-icons/fa";
+import InfoBox from "../../../Component/InfoBox/InfoBox";
 
 const NavTwo = () => {
   const [group, setGroup] = useState("Join Group");
+  const [showBox, setShowBox] = useState(false);
+  const [user, setUser] = useState();
 
   const handleGroup = () => {
     setGroup("Live Group");
   };
+
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target)
+      ) {
+        setShowBox("");
+      }
+    };
+    window.addEventListener("click", handleClickOutside);
+
+    return () => {
+      window.removeEventListener("click", handleClickOutside);
+    };
+  }, [containerRef]);
+
+  const handleClick = () => {
+    setShowBox(!showBox);
+  };
+
+  useEffect(() => {
+    const loggedUser = localStorage.getItem("token");
+    if (loggedUser) {
+      setUser(true);
+    } else {
+      setUser(false);
+    }
+  }, []);
 
   return (
     <div>
@@ -23,32 +64,73 @@ const NavTwo = () => {
         >
           <Nav className="mr-auto">
             <Nav.Item>
-              <ActiveLink to="/">AllPost</ActiveLink>
+              <ActiveLink to="/">
+                <FaHome className="m-3" size={24} />
+              </ActiveLink>
             </Nav.Item>
             <Nav.Item>
-              <ActiveLink to="/all-article">Article</ActiveLink>
+              <ActiveLink to="/articles">
+                <BsFillPenFill className="m-3" size={24} />
+              </ActiveLink>
             </Nav.Item>
             <Nav.Item>
-              <ActiveLink to="/all-event">Event</ActiveLink>
+              <ActiveLink to="/events">
+                <BsFillCalendarEventFill className="m-3" size={24} />
+              </ActiveLink>
             </Nav.Item>
             <Nav.Item>
-              <ActiveLink to="/all-education">Education</ActiveLink>
+              <ActiveLink to="/educations">
+                <BsMortarboardFill className="m-3" size={24} />
+              </ActiveLink>
             </Nav.Item>
             <Nav.Item>
-              <ActiveLink to="/all-jobs">Jobs</ActiveLink>
+              <ActiveLink to="/jobs">
+                <BsFillHandbagFill className="m-3 " size={24} />
+              </ActiveLink>
             </Nav.Item>
           </Nav>
-          <Nav>
-            <NavDropdown title="Create a Post" id="basic-nav-dropdown">
-              <Link to="/post-article">Write an Article</Link>
-              <Link to="/post-education">Write Education</Link>
-              <Link to="/post-event">Post Event</Link>
-              <Link to="/post-job">Post a Job</Link>
-            </NavDropdown>
-            <Button variant="primary" onClick={handleGroup}>
-              {group}
-            </Button>
-          </Nav>
+          {user ? (
+            <Nav>
+              <div ref={containerRef}>
+                <div>
+                  <img
+                    src="https://rs-rahaman.github.io/Brittany-LG/img/rs%20abdur%20rhaman%20sultnay.jpg"
+                    alt="item"
+                    style={{
+                      width: "50px",
+                      height: "50px",
+                      borderRadius: "50%",
+                      cursor: "pointer",
+                    }}
+                    onClick={handleClick}
+                  />
+                </div>
+                {showBox && <InfoBox />}
+              </div>
+              <NavDropdown
+                title="Create a Post"
+                id="basic-nav-dropdown"
+                className="mt-2"
+              >
+                <Link to="/post-article" className=" custom-hover-bg">
+                  Write an Article
+                </Link>
+                <Link to="/post-education" className=" custom-hover-bg">
+                  Write Education
+                </Link>
+                <Link to="/post-event" className=" custom-hover-bg">
+                  Post Event
+                </Link>
+                <Link to="/post-job" className=" custom-hover-bg">
+                  Post a Job
+                </Link>
+              </NavDropdown>
+            </Nav>
+          ) : (
+            <Link to={"/login"}>
+              <button className="btn btn-primary ">Login</button>
+            </Link>
+          )}
         </Navbar.Collapse>
       </Navbar>
     </div>

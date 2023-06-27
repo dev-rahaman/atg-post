@@ -12,6 +12,13 @@ import JobForm from "../Pages/AllJobs/JobForm";
 import EventForm from "../Pages/AllEvent/EventForm";
 import Login from "../Users/Login/Login";
 import Registration from "../Users/Registration/Registration";
+import MongooseForm from "../mongoose/mongoose";
+import UpdateJob from "../Pages/AllJobs/UpdateJob";
+import UpdateArticle from "../Pages/AllArticle/UpdateArticle";
+import UpdateEducation from "../Pages/AllEducation/UpdateEducation";
+import UpdateEvent from "../Pages/AllEvent/UpdateEvent";
+import ForgetPassword from "../Pages/ForgetPassword/ForgetPassword";
+import SetNewPassword from "../Pages/ForgetPassword/SetNewPassword";
 
 const Router = createBrowserRouter([
   {
@@ -21,7 +28,9 @@ const Router = createBrowserRouter([
       {
         path: "/",
         element: <Home></Home>,
+        loader: () => fetch("https://atg-server-delta.vercel.app/all-data"),
       },
+      // posting routers here
       {
         path: "/post-article",
         element: <ArticleForm></ArticleForm>,
@@ -38,29 +47,50 @@ const Router = createBrowserRouter([
         path: "/post-job",
         element: <JobForm></JobForm>,
       },
+
+      // updating routers here`s
+      {
+        path: "/update-article/:id",
+        element: <UpdateArticle></UpdateArticle>,
+      },
+      {
+        path: "/update-education/:id",
+        element: <UpdateEducation></UpdateEducation>,
+      },
+      {
+        path: "/update-event/:id",
+        element: <UpdateEvent></UpdateEvent>,
+      },
+      {
+        path: "/update-job/:id",
+        element: <UpdateJob></UpdateJob>,
+      },
+
+      // getting routers here`s
       {
         path: "/all-post",
         element: <Home></Home>,
+        loader: () => fetch("https://atg-server-delta.vercel.app/all-data"),
       },
       {
-        path: "/all-article",
+        path: "/articles",
         element: <AllArticle></AllArticle>,
         loader: () => fetch("https://atg-server-delta.vercel.app/articles"),
       },
       {
-        path: "/all-event",
-        element: <AllEvent></AllEvent>,
-        loader: () => fetch("https://atg-server-delta.vercel.app/event"),
-      },
-      {
-        path: "/all-education",
+        path: "/educations",
         element: <AllEducation></AllEducation>,
-        loader: () => fetch("https://atg-server-delta.vercel.app/education"),
+        loader: () => fetch("https://atg-server-delta.vercel.app/educations"),
       },
       {
-        path: "/all-jobs",
+        path: "/events",
+        element: <AllEvent></AllEvent>,
+        loader: () => fetch("https://atg-server-delta.vercel.app/events"),
+      },
+      {
+        path: "/jobs",
         element: <AllJob></AllJob>,
-        loader: () => fetch("https://atg-server-delta.vercel.app/job"),
+        loader: () => fetch("https://atg-server-delta.vercel.app/jobs"),
       },
     ],
   },
@@ -71,6 +101,18 @@ const Router = createBrowserRouter([
   {
     path: "/registration",
     element: <Registration></Registration>,
+  },
+  {
+    path: "/form",
+    element: <MongooseForm />,
+  },
+  {
+    path: "/forget-password",
+    element: <ForgetPassword></ForgetPassword>,
+  },
+  {
+    path: "/set-new-password",
+    element: <SetNewPassword></SetNewPassword>,
   },
 ]);
 

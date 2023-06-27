@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Container, Form, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const ArticleForm = () => {
   const [bloggerName, setBloggerName] = useState("");
@@ -7,6 +9,7 @@ const ArticleForm = () => {
   const [blogTitle, setBlogTitle] = useState("");
   const [blogParagraph, setBlogParagraph] = useState("");
   const [blogImage, setBlogImage] = useState("");
+  const navigate = useNavigate("/");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,6 +30,14 @@ const ArticleForm = () => {
       },
       body: JSON.stringify(article),
     });
+    Swal.fire({
+      position: "top-center",
+      icon: "success",
+      title: "Your Article is posted",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    navigate("/");
   };
 
   return (
@@ -34,7 +45,7 @@ const ArticleForm = () => {
       <h2 className="text-center text-primary  mt-5 ">Write A Article</h2>
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="bloggerName">
-          <Form.Label>Writer Name</Form.Label>
+          <Form.Label>Author Name</Form.Label>
           <Form.Control
             type="text"
             placeholder="your name"

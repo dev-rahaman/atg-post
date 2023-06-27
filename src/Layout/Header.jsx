@@ -53,7 +53,6 @@ const Header = () => {
               }}
             />
           </Form>
-
           <Nav className="ms-auto">
             <NavDropdown
               title="Create an Account it is free"
@@ -81,7 +80,7 @@ const Header = () => {
                 handleClose={handleCloseLoginModal}
               />
             </NavDropdown>
-          </Nav>
+          </Nav>{" "}
         </Navbar.Collapse>
       </Container>
     </Navbar>

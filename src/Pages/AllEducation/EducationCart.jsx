@@ -12,6 +12,9 @@ import {
   BsFillSuitHeartFill,
 } from "react-icons/bs";
 import CommentForm from "../../Component/CommentForm/CommentForm";
+import AllComment from "../../Component/AllComment/AllComment";
+import { FaRegCommentDots } from "react-icons/fa";
+import CrudDropDown from "../../Component/CRUD/CrudDropDown";
 
 const EducationCart = ({ item }) => {
   const [expandedCard, setExpandedCard] = useState(null);
@@ -50,6 +53,23 @@ const EducationCart = ({ item }) => {
       });
   };
 
+  const [showComment, setShowComment] = useState(false);
+  const handleCommentIcon = () => {
+    setShowComment(true);
+  };
+
+  const education = "education";
+  const url = `https://atg-server-delta.vercel.app/${education}/${_id}`;
+  const handleDelete = () => {
+    fetch(url, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
+  };
+
   return (
     <div>
       <Card style={{ marginBottom: "20px" }}>
@@ -58,37 +78,23 @@ const EducationCart = ({ item }) => {
 
           <Card.Body>
             <h5 className="ms-2 mt-2">
-              {category === "article" && (
-                <>
-                  <BsFillPenFill className="me-1" /> Article
-                </>
-              )}
               {category === "education" && (
                 <>
                   <BsMortarboardFill className="me-1" /> Education
                 </>
               )}
-              {category === "event" && (
-                <>
-                  <BsFillCalendarEventFill className="me-1" /> Event
-                </>
-              )}
-              {category === "job" && (
-                <>
-                  <BsFillHandbagFill className="me-1" /> Job
-                </>
-              )}
             </h5>
             <div className="d-flex justify-content-between mb-2">
               <Card.Title>{blogTitle}</Card.Title>
-              <BsThreeDots style={{ cursor: "pointer" }} />
-
-              <br />
+              <CrudDropDown
+                deleteHandler={() => handleDelete(_id)}
+                updateLink={`/update-education/${_id}`}
+              />
             </div>
             <span>
               {expandedCard === _id
                 ? blogParagraph
-                : `${blogParagraph.slice(0, 110)}...`}
+                : `${blogParagraph?.slice(0, 110)}...`}
             </span>
             {expandedCard !== _id && (
               <span
@@ -126,7 +132,14 @@ const EducationCart = ({ item }) => {
                 />
                 <h5 className="poster-name ms-2 ">{bloggerName}</h5>
               </div>
-              <CommentForm></CommentForm>
+
+              <FaRegCommentDots
+                onClick={handleCommentIcon}
+                size={24}
+                style={{ cursor: "pointer" }}
+              />
+              {showComment ? <CommentForm _id={_id}></CommentForm> : " "}
+
               <div className="d-flex align-content-center mt-2">
                 <button
                   onClick={() => handleLike(_id)}
@@ -157,6 +170,7 @@ const EducationCart = ({ item }) => {
                 </p>
               </div>
             </div>
+            {showComment ? <AllComment _id={_id}></AllComment> : " "}
           </Card.Body>
         </Row>
       </Card>

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Row } from "react-bootstrap";
 import {
   BsFillShareFill,
@@ -12,6 +12,9 @@ import {
   BsFillSuitHeartFill,
 } from "react-icons/bs";
 import CommentForm from "../../Component/CommentForm/CommentForm";
+import { FaRegCommentDots } from "react-icons/fa";
+import AllComment from "../../Component/AllComment/AllComment";
+import CrudDropDown from "../../Component/CRUD/CrudDropDown";
 
 const EducationCart = ({ item }) => {
   const [expandedCard, setExpandedCard] = useState(null);
@@ -31,23 +34,41 @@ const EducationCart = ({ item }) => {
   };
 
   const [liked, setLiked] = useState(false);
-  const [disabled, setDisabled] = useState(false);
+  const [count, setCount] = useState(0);
 
-  const handleLike = (_id) => {
-    fetch(`https://atg-server-delta.vercel.app/like/${_id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
+  const handleLike = async (_id) => {
+    const updatedCount = liked ? count - 1 : count + 1;
+
+    try {
+      await fetch(`https://atg-server-delta.vercel.app/like/${_id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      setLiked(!liked);
+      setCount(updatedCount);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const article = "article";
+  const url = `https://atg-server-delta.vercel.app/${article}/${_id}`;
+  const handleDelete = () => {
+    fetch(url, {
+      method: "DELETE",
     })
       .then((res) => res.json())
       .then((data) => {
-        setDisabled(true);
-        setLiked(true);
-      })
-      .catch((error) => {
-        console.error(error);
+        console.log(data);
       });
+  };
+
+  const [showComment, setShowComment] = useState(false);
+  const handleCommentIcon = () => {
+    setShowComment(true);
   };
 
   return (
@@ -63,27 +84,13 @@ const EducationCart = ({ item }) => {
                   <BsFillPenFill className="me-1" /> Article
                 </>
               )}
-              {category === "education" && (
-                <>
-                  <BsMortarboardFill className="me-1" /> Education
-                </>
-              )}
-              {category === "event" && (
-                <>
-                  <BsFillCalendarEventFill className="me-1" /> Event
-                </>
-              )}
-              {category === "job" && (
-                <>
-                  <BsFillHandbagFill className="me-1" /> Job
-                </>
-              )}
             </h5>
-            <div className="d-flex justify-content-between mb-2">
+            <div className="d-flex justify-content-between mb-2 ">
               <Card.Title>{blogTitle}</Card.Title>
-              <BsThreeDots style={{ cursor: "pointer" }} />
-
-              <br />
+              <CrudDropDown
+                deleteHandler={() => handleDelete(_id)}
+                updateLink={`/update-article/${_id}`}
+              />
             </div>
             <span>
               {expandedCard === _id
@@ -126,11 +133,17 @@ const EducationCart = ({ item }) => {
                 />
                 <h5 className="poster-name ms-2 ">{bloggerName}</h5>
               </div>
-              <CommentForm></CommentForm>
+
+              <FaRegCommentDots
+                onClick={handleCommentIcon}
+                size={24}
+                style={{ cursor: "pointer" }}
+              />
+              {showComment ? <CommentForm _id={_id}></CommentForm> : " "}
+
               <div className="d-flex align-content-center mt-2">
                 <button
                   onClick={() => handleLike(_id)}
-                  disabled={disabled}
                   style={{
                     fontSize: "20px",
                     border: "none",
@@ -144,8 +157,8 @@ const EducationCart = ({ item }) => {
                       marginRight: "10px",
                     }}
                   />
-                  {like}
                 </button>
+                <span> {like}</span>
 
                 <p className="mx-5 " style={{ fontSize: "20px" }}>
                   <BsFillEyeFill style={{ fontSize: "20px" }} /> 124k views
@@ -157,6 +170,7 @@ const EducationCart = ({ item }) => {
                 </p>
               </div>
             </div>
+            {showComment ? <AllComment _id={_id}></AllComment> : " "}
           </Card.Body>
         </Row>
       </Card>

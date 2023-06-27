@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
-import { Card, NavDropdown, Row } from "react-bootstrap";
+import { Card, Row } from "react-bootstrap";
 import {
   BsFillShareFill,
   BsFillEyeFill,
@@ -14,10 +14,9 @@ import {
 import { FaRegCommentDots } from "react-icons/fa";
 import CommentForm from "../../Component/CommentForm/CommentForm";
 import AllComment from "../../Component/AllComment/AllComment";
-import { Link } from "react-router-dom";
 import CrudDropDown from "../../Component/CRUD/CrudDropDown";
 
-const JobsCart = ({ item }) => {
+const HomeCart = ({ item }) => {
   const [expandedCard, setExpandedCard] = useState(null);
   const {
     _id,
@@ -35,24 +34,22 @@ const JobsCart = ({ item }) => {
   };
 
   const [liked, setLiked] = useState(false);
-  const [count, setCount] = useState();
-
-  const handleLike = async (_id) => {
-    const updatedCount = liked ? count - 1 : count + 1;
-
-    try {
-      await fetch(`https://atg-server-delta.vercel.app/job-like/${_id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
+  const [disabled, setDisabled] = useState(false);
+  const handleLike = (_id) => {
+    fetch(`https://atg-server-delta.vercel.app/job-like/${_id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setDisabled(true);
+        setLiked(true);
+      })
+      .catch((error) => {
+        console.error(error);
       });
-
-      setLiked(!liked);
-      setCount(updatedCount);
-    } catch (error) {
-      console.error(error);
-    }
   };
 
   const [showComment, setShowComment] = useState(false);
@@ -60,8 +57,26 @@ const JobsCart = ({ item }) => {
     setShowComment(true);
   };
 
-  const job = "job";
-  const url = `https://atg-server-delta.vercel.app/${job}/${_id}`;
+  let resource = "";
+
+  switch (category) {
+    case "article":
+      resource = "article";
+      break;
+    case "education":
+      resource = "education";
+      break;
+    case "job":
+      resource = "job";
+      break;
+    case "event":
+      resource = "event";
+      break;
+    default:
+      break;
+  }
+  const url = `https://atg-server-delta.vercel.app/${resource}/${_id}`;
+
   const handleDelete = () => {
     fetch(url, {
       method: "DELETE",
@@ -71,6 +86,7 @@ const JobsCart = ({ item }) => {
         console.log(data);
       });
   };
+
   return (
     <div>
       <Card style={{ marginBottom: "20px" }}>
@@ -79,6 +95,21 @@ const JobsCart = ({ item }) => {
 
           <Card.Body>
             <h5 className="ms-2 mt-2">
+              {category === "article" && (
+                <>
+                  <BsFillPenFill className="me-1" /> Article
+                </>
+              )}
+              {category === "education" && (
+                <>
+                  <BsMortarboardFill className="me-1" /> Education
+                </>
+              )}
+              {category === "event" && (
+                <>
+                  <BsFillCalendarEventFill className="me-1" /> Event
+                </>
+              )}
               {category === "job" && (
                 <>
                   <BsFillHandbagFill className="me-1" /> Job
@@ -89,14 +120,23 @@ const JobsCart = ({ item }) => {
               <Card.Title>{blogTitle}</Card.Title>
               <CrudDropDown
                 deleteHandler={() => handleDelete(_id)}
-                updateLink={`/update-job/${_id}`}
+                updateLink={
+                  category === "article"
+                    ? `/update-article/${_id}`
+                    : category === "education"
+                    ? `/update-education/${_id}`
+                    : category === "event"
+                    ? `/update-event/${_id}`
+                    : category === "job"
+                    ? `/update-job/${_id}`
+                    : ""
+                }
               />
             </div>
-
             <span>
               {expandedCard === _id
                 ? blogParagraph
-                : `${blogParagraph.slice(0, 110)}...`}
+                : `${blogParagraph?.slice(0, 110)}...`}
             </span>
             {expandedCard !== _id && (
               <span
@@ -145,6 +185,7 @@ const JobsCart = ({ item }) => {
               <div className="d-flex align-content-center mt-2">
                 <button
                   onClick={() => handleLike(_id)}
+                  disabled={disabled}
                   style={{
                     fontSize: "20px",
                     border: "none",
@@ -179,4 +220,4 @@ const JobsCart = ({ item }) => {
   );
 };
 
-export default JobsCart;
+export default HomeCart;

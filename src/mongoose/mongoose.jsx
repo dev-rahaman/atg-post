@@ -1,46 +1,33 @@
 import React, { useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
 
-const Login = () => {
+const MongooseForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate("/");
+  const [username, setUsername] = useState("");
 
-  const token = "dsljfosithjaohgv";
-
-  const handleLogin = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    const emailPassword = {
+    const users = {
       email,
       password,
+      username,
     };
 
-    fetch("https://atg-server-delta.vercel.app/login", {
+    fetch("http://localhost:1000/products", {
       method: "POST",
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify(emailPassword),
+      body: JSON.stringify(users),
     });
-    Swal.fire({
-      position: "top-center",
-      icon: "success",
-      title: "Login Successfully",
-      showConfirmButton: false,
-      timer: 1500,
-    });
-    localStorage.setItem("token", token);
-    console.log("sign up successfully");
-    navigate("/");
   };
 
   return (
     <Container>
-      <h2 className="text-center text-primary  mt-5 ">Login Now!</h2>
-      <Form onSubmit={handleLogin}>
+      <h2 className="text-center text-primary  mt-5 ">Mongoose Fomr!</h2>
+      <Form onSubmit={handleSubmit}>
         <Form.Group controlId="email">
           <Form.Label>Email</Form.Label>
           <Form.Control
@@ -48,6 +35,16 @@ const Login = () => {
             placeholder="Enter your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+          />
+        </Form.Group>
+
+        <Form.Group controlId="username">
+          <Form.Label>username</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
         </Form.Group>
 
@@ -62,13 +59,11 @@ const Login = () => {
         </Form.Group>
 
         <Button variant="primary" className="mt-3" type="submit">
-          Login Now
+          Register Now
         </Button>
       </Form>
-      <Link to={"/registration"}>Register</Link>
-      <Link to={"/forget-password"}>Forget Password</Link>
     </Container>
   );
 };
 
-export default Login;
+export default MongooseForm;
