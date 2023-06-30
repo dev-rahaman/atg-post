@@ -51,7 +51,7 @@ a {
 }
 
 .active {
-  color: #000;
+  color: #27a365;
 }
 
 a.active {
@@ -77,4 +77,51 @@ a.active {
 
 .dropdown-toggle::after {
   display: none;
+}
+
+.post-cart-container {
+  background-color: rgb(230, 230, 230);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 10px;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.form-button {
+  width: 500px;
+  text-align: left;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 50px;
+  color: #a5a7ab;
+  background-color: #f0f2f5;
+  cursor: pointer;
+  display: block;
+}
+
+.form-button-tow {
+  width: 140px;
+  padding-top: 10px;
+  cursor: pointer;
+  border-radius: 50px;
+  border: none;
+}
+.form-button-tow:hover {
+  background-color: #f0f2f5;
+}
+
+.post-modal-icon {
+  width: 50px;
+  height: 50px;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.post-modal-icon:hover {
+  background-color: rgb(231, 231, 231);
 }

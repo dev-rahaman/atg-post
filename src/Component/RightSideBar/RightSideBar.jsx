@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, Table } from "react-bootstrap";
+import { BsFillPenFill } from "react-icons/bs";
 
 const RightSideBar = () => {
   const [followStatus, setFollowStatus] = useState({});
@@ -43,10 +44,9 @@ const RightSideBar = () => {
   return (
     <div>
       <h5>Location:</h5>
-      <p>
-        Your location will help us serve better and extend a personalised
-        experience.
-      </p>
+      <div className="d-flex">
+        <p className="me-2">Dhaka, Bangladesh</p> <BsFillPenFill size={20} />
+      </div>
       <h2>Recommended Groups</h2>
       <table>
         <tbody>

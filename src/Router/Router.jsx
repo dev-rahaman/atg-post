@@ -12,13 +12,15 @@ import JobForm from "../Pages/AllJobs/JobForm";
 import EventForm from "../Pages/AllEvent/EventForm";
 import Login from "../Users/Login/Login";
 import Registration from "../Users/Registration/Registration";
-import MongooseForm from "../mongoose/mongoose";
 import UpdateJob from "../Pages/AllJobs/UpdateJob";
 import UpdateArticle from "../Pages/AllArticle/UpdateArticle";
 import UpdateEducation from "../Pages/AllEducation/UpdateEducation";
 import UpdateEvent from "../Pages/AllEvent/UpdateEvent";
 import ForgetPassword from "../Pages/ForgetPassword/ForgetPassword";
 import SetNewPassword from "../Pages/ForgetPassword/SetNewPassword";
+import PostCart from "../PostCart/PostCart";
+import PostModal from "../Component/PostModal/PostModal";
+import UserList from "../Pages/UserList/UserList";
 
 const Router = createBrowserRouter([
   {
@@ -104,7 +106,7 @@ const Router = createBrowserRouter([
   },
   {
     path: "/form",
-    element: <MongooseForm />,
+    element: <PostModal></PostModal>,
   },
   {
     path: "/forget-password",
@@ -113,6 +115,10 @@ const Router = createBrowserRouter([
   {
     path: "/set-new-password",
     element: <SetNewPassword></SetNewPassword>,
+  },
+  {
+    path: "/user-list",
+    element: <UserList></UserList>,
   },
 ]);
 
