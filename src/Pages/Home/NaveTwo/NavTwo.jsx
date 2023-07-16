@@ -12,13 +12,8 @@ import { FaHome } from "react-icons/fa";
 import InfoBox from "../../../Component/InfoBox/InfoBox";
 
 const NavTwo = () => {
-  const [group, setGroup] = useState("Join Group");
   const [showBox, setShowBox] = useState(false);
   const [user, setUser] = useState();
-
-  const handleGroup = () => {
-    setGroup("Live Group");
-  };
 
   const containerRef = useRef(null);
 
@@ -53,10 +48,7 @@ const NavTwo = () => {
 
   return (
     <div>
-      <Navbar
-        expand="lg"
-        style={{ borderBottom: "2px solid gray", margin: "0 40px" }}
-      >
+      <Navbar expand="lg">
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse
           className="d-lg-flex justify-content-around "
@@ -65,27 +57,27 @@ const NavTwo = () => {
           <Nav className="mr-auto">
             <Nav.Item>
               <ActiveLink to="/">
-                <FaHome className="m-3" size={24} />
+                <FaHome className="me-3" size={24} />
               </ActiveLink>
             </Nav.Item>
             <Nav.Item>
               <ActiveLink to="/articles">
-                <BsFillPenFill className="m-3" size={24} />
+                <BsFillPenFill className="me-3" size={24} />
               </ActiveLink>
             </Nav.Item>
             <Nav.Item>
               <ActiveLink to="/events">
-                <BsFillCalendarEventFill className="m-3" size={24} />
+                <BsFillCalendarEventFill className="me-3" size={24} />
               </ActiveLink>
             </Nav.Item>
             <Nav.Item>
               <ActiveLink to="/educations">
-                <BsMortarboardFill className="m-3" size={24} />
+                <BsMortarboardFill className="me-3" size={24} />
               </ActiveLink>
             </Nav.Item>
             <Nav.Item>
               <ActiveLink to="/jobs">
-                <BsFillHandbagFill className="m-3 " size={24} />
+                <BsFillHandbagFill className="me-3" size={24} />
               </ActiveLink>
             </Nav.Item>
           </Nav>
